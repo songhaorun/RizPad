@@ -2,6 +2,11 @@
 
 将 iPad 变为低延迟触控键盘，用于全屏音游。
 
+参考项目：<br>https://github.com/esterTion/Brokenithm-iOS
+<br>https://github.com/pinapelz/brokenithm-evolved-ios-umi
+
+主要构造人员：Claude Opus 4.6
+
 ## 工作原理
 
 ```
