@@ -1,3 +1,51 @@
+# ── OS ──
 .DS_Store
-*.png
+Thumbs.db
+Desktop.ini
+
+# ── IDE / Editor ──
+.idea/
+.vscode/
+*.iml
+*.swp
+*~
+
+# ── Android (Gradle) ──
+.gradle/
+build/
+local.properties
+*.apk
+*.aab
+*.ap_
+*.dex
+captures/
+*.externalNativeBuild/
+.cxx/
+
+# ── iOS / Xcode ──
+xcuserdata/
+DerivedData/
+*.xcworkspace/xcuserdata/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+Pods/
+
+# ── Python ──
 __pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+*.egg
+.venv/
+venv/
+
+# ── Assets (tracked via LFS or external) ──
+*.png
