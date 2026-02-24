@@ -1,6 +1,6 @@
 # RizPad + RizPC
 
-将 iPad 变为低延迟触控键盘，用于全屏音游。
+将 iPad / Android 平板变为低延迟触控键盘，用于全屏音游。
 
 参考项目：<br>https://github.com/esterTion/Brokenithm-iOS
 <br>https://github.com/pinapelz/brokenithm-evolved-ios-umi
@@ -10,7 +10,7 @@
 ## 工作原理
 
 ```
-iPad (RizPad App)                    PC (RizPC)
+iPad/Android (RizPad App)            PC (RizPC)
 ┌──────────────┐    TCP/USB     ┌──────────────────┐
 │ 多指触摸      │ ──────────→  │ 接收触摸数据       │
 │ 按顺序分配键位 │   端口24864   │ 注入系统键盘事件   │
@@ -76,6 +76,50 @@ RizPad/RizPad/RizPad/
 4. iPad 上出现全屏黑色界面 + 底部键位指示器 = 成功
 
 > 首次运行如果弹出"是否允许本地网络访问"，请点**允许**。
+
+---
+
+## Android 端 (RizPad-Android)
+
+### 环境要求
+
+- Android Studio (Arctic Fox 或更新)
+- Android SDK 34
+- Android 7.0+ (API 24+) 设备
+
+### 项目结构
+
+```
+RizPad-Android/app/src/main/java/com/rizpad/
+├── activity/
+│   └── MainActivity.kt       # 全屏触控、圆点可视化、触摸事件处理
+├── network/
+│   └── NetworkManager.kt     # TCP Server (ServerSocket)，端口 24864
+└── touch/
+    └── TouchKeyMapper.kt     # 槽位分配逻辑（按触下顺序）
+```
+
+### 部署
+
+1. 用 Android Studio 打开 `RizPad-Android/` 目录
+2. 等待 Gradle 同步完成
+3. 连接 Android 设备或使用模拟器
+4. 点 ▶ Run 部署到设备
+5. 设备上出现全屏黑色界面 + IP 地址 + 底部键位指示器 = 成功
+
+### USB 连接（推荐）
+
+Android 使用 ADB 端口转发更简单：
+
+```bash
+adb reverse tcp:24864 tcp:24864
+```
+
+然后在 PC 端运行：
+
+```bash
+python3 main.py 127.0.0.1
+```
 
 ---
 
@@ -156,14 +200,25 @@ python3 main.py 127.0.0.1
 
 ## 完整流程（快速开始）
 
+### iPad
+
 1. Xcode 部署 RizPad 到 iPad → 打开 App
 2. USB 连接 iPad 到电脑
 3. 终端 1：`iproxy 24864:24864`
 4. 终端 2：`python3 main.py 127.0.0.1`
 5. 触摸 iPad 屏幕 → PC 终端显示按键事件
 
+### Android
+
+1. Android Studio 部署 RizPad 到设备 → 打开 App
+2. USB 连接设备到电脑
+3. 终端 1：`adb reverse tcp:24864 tcp:24864`
+4. 终端 2：`python3 main.py 127.0.0.1`
+5. 触摸屏幕 → PC 终端显示按键事件
+
 ## 开发者
 
 - iPad App: Swift + UIKit + Network.framework
+- Android App: Kotlin + Android SDK
 - PC Client: Python 3（标准库）
 - 协议: 自定义二进制，TCP，低延迟（TCP_NODELAY）
